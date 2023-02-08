@@ -1,0 +1,16 @@
+# Ignore dependencies
+node_modules/
+
+# Ignore bundle files
+build/
+dist/
+.cache/
+.rpt2_cache/
+./*.tgz
+lib/
+src/test
+
+# Ignore others
+yarn-error.log
+.DS_Store
+debug.log
