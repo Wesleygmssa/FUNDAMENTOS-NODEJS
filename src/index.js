@@ -91,5 +91,30 @@ app.post('/withdraw', verifyIfExistsAccountCPF, (request, response) => {
     return response.status(201).json(statementOperation);
 });
 
+app.get('/statement;date', verifyIfExistsAccountCPF, (request, response) => {
+    const { customer } = request;
+    if (!customer) {
+        return response.status(400).json({ error: "Customer not found!" });
+    }
+    const { date } = request.query;
+    if (!date) {
+        return response.status(400).json({ error: "Date not found!" });
+    }
+    const dateFormat = new Date(date + " 00:00");
+    const statement = customer.statement.filter(statement => statement.created_at.toDateString() === dateFormat.toDateString());
+    return response.json(statement);
+});
+
+app.put('/account', verifyIfExistsAccountCPF, (request, response) => {
+    const { name } = request.body;
+    const { customer } = request;
+    if (!customer) {
+        return response.status(400).json({ error: "Customer not found!" });
+    }
+    customer.name = name;
+    return response.json(customer);
+});
+
+
 
 app.listen(3333)
